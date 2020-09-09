@@ -1,0 +1,22 @@
+{
+    "name": "cblink/laravel-model-library",
+    "description": "Package description here.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nick",
+            "email": "me@xieying.vip"
+        }
+    ],
+    "require": {
+        "php": ">=7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cblink\\LaravelModelLibrary\\": "src"
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^5.5"
+    }
+}
