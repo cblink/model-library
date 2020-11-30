@@ -4,7 +4,7 @@ namespace Cblink\LaravelModelLibrary\Search;
 
 use Illuminate\Database\Eloquent\Builder;
 
-trait SearchMethod
+trait SearchOrMethod
 {
     /**
      * 日期筛选
@@ -13,14 +13,16 @@ trait SearchMethod
      * @param $key
      * @param $val
      */
-    public function whereDate($query, $key, $val)
+    public function orWhereDate($query, $key, $val)
     {
         $date = explode("~", $val);
         if (count($date) == 2) {
-            $query->whereDate($key, '>=', strtodate($date[0], 'Y-m-d'))
-                ->whereDate($key, '<=', strtodate($date[1], 'Y-m-d'));
+            $query->orWhere(function($query) use ($key, $date){
+                $query->whereDate($key, '>=', strtodate($date[0], 'Y-m-d'))
+                    ->whereDate($key, '<=', strtodate($date[1], 'Y-m-d'));
+            });
         } else {
-            $query->whereDate($key, $date[0]);
+            $query->orWhereDate($key, $date[0]);
         }
     }
 
@@ -31,14 +33,16 @@ trait SearchMethod
      * @param $key
      * @param $val
      */
-    public function whereDatetime($query, $key, $val)
+    public function orWhereDatetime($query, $key, $val)
     {
         $date = explode("~", $val);
         if (count($date) == 2) {
-            $query->where($key, '>=', strtodate($date[0]))
-                ->where($key, '<=', strtodate($date[1]));
+            $query->orWhere(function($query) use ($key, $date){
+                $query->where($key, '>=', strtodate($date[0]))
+                    ->where($key, '<=', strtodate($date[1]));
+            });
         } else {
-            $query->where($key, $date[0]);
+            $query->orWhere($key, $date[0]);
         }
     }
 
@@ -49,9 +53,9 @@ trait SearchMethod
      * @param $key
      * @param $val
      */
-    public function whereKeyword($query, $key, $val)
+    public function orWhereKeyword($query, $key, $val)
     {
-        $query->where($key, 'LIKE', $val);
+        $query->orWhere($key, 'LIKE', $val);
     }
 
     /**
@@ -61,9 +65,9 @@ trait SearchMethod
      * @param $key
      * @param $val
      */
-    public function whereIn($query, $key, $val)
+    public function orWhereIn($query, $key, $val)
     {
-        $query->whereIn($key, $val);
+        $query->orWhereIn($key, $val);
     }
 
     /**
@@ -73,9 +77,9 @@ trait SearchMethod
      * @param $key
      * @param $val
      */
-    public function whereEq($query, $key, $val)
+    public function orWhereEq($query, $key, $val)
     {
-        $query->where($key, '=', $val);
+        $query->orWhere($key, '=', $val);
     }
 
     /**
@@ -85,9 +89,9 @@ trait SearchMethod
      * @param $key
      * @param $val
      */
-    public function whereLt($query, $key, $val)
+    public function orWhereLt($query, $key, $val)
     {
-        $query->where($key, '<', $val);
+        $query->orWhere($key, '<', $val);
     }
 
     /**
@@ -97,9 +101,9 @@ trait SearchMethod
      * @param $key
      * @param $val
      */
-    public function whereLte($query, $key, $val)
+    public function orWhereLte($query, $key, $val)
     {
-        $query->where($key, '<=', $val);
+        $query->orWhere($key, '<=', $val);
     }
 
     /**
@@ -109,9 +113,9 @@ trait SearchMethod
      * @param $key
      * @param $val
      */
-    public function whereGt($query, $key, $val)
+    public function orWhereGt($query, $key, $val)
     {
-        $query->where($key, '>', $val);
+        $query->orWhere($key, '>', $val);
     }
 
 
@@ -122,9 +126,9 @@ trait SearchMethod
      * @param $key
      * @param $val
      */
-    public function whereGte($query, $key, $val)
+    public function orWhereGte($query, $key, $val)
     {
-        $query->where($key, '>=', $val);
+        $query->orWhere($key, '>=', $val);
     }
 
 }

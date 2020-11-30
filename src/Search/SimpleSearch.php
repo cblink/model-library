@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SimpleSearch
 {
-    use SearchMethod;
+    use SearchMethod, SearchOrMethod;
 
     /**
      * @var Builder
@@ -74,47 +74,110 @@ class SimpleSearch
         if ($this->items) {
             $this->validate();
 
-            $this->query->where(function (Builder $query) {
-                $inputs = request()->only(array_keys($this->items));
+            $inputs = $this->getInputs();
 
-                foreach ($inputs as $key => $input) {
-                    $this->execQuery($query, $this->items[$key], $key, $input);
-                }
-            });
+            foreach (collect($inputs)->groupBy('group') as $collects) {
+                $this->query->where(function (Builder $query) use ($collects){
+                    foreach ($collects as $params) {
+                        $this->execQuery($query, $params);
+                    }
+                });
+            }
         }
 
         return $this->query;
     }
 
     /**
-     * 进行过滤
-     *
-     * @param $query
-     * @param array $rule
-     * @param $key
-     * @param $input
+     * @return array|array[]
      */
-    public function execQuery($query, array $rule, $key, $input)
+    public function getInputs()
     {
+        $data = [];
+
+        $inputs = request()->only(array_keys($this->items));
+
+        foreach ($inputs as $key => $val) {
+
+            $rules = array_values($this->items[$key]);
+
+            // 多维数据
+            if ($rules && is_array($rules[0])) {
+                foreach ($rules as $rule) {
+                    if (!isset($rule['group'])) {
+                        $rule['group'] = $key;
+                    }
+                    array_push($data, $this->getRule($key, $val, $rule));
+                }
+            } else {
+                array_push($data, $this->getRule($key, $val, $rules));
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param $key
+     * @param $value
+     * @param $rules
+     * @return array
+     */
+    public function getRule($key, $value, $rules)
+    {
+        if (isset($rules['type']) && $rules['type'] == 'keyword') {
+            $rules['after'] = "%";
+            $value = trim($value, '%');
+        }
+
+        $value = ($rules['before'] ?? '') . $value . ($rules['after'] ?? '');
+
         $params = [
             'type' => 'eq',
             'relate' => null,
             'field' => $key,
-            'default' => null
+            'default' => null,
+            'group' => 'default',
+            'mix' => 'and',
+            "value" => $value,
         ];
 
-        $params = array_merge($params, $rule);
+        return array_merge($params, $rules);
+    }
 
+    /**
+     * 进行过滤
+     *
+     * @param $query
+     * @param array $params
+     */
+    public function execQuery($query, array $params = [])
+    {
         // 调用的方法
-        $callMethod = sprintf('where%s', ucfirst($params['type']));
+        $method = $params['mix'] == 'or' ?
+            sprintf('orWhere%s', ucfirst($params['type'])) :
+            sprintf('where%s', ucfirst($params['type']));
 
         if ($params['relate']) {
-            $query->whereHas($params['relate'], function ($query) use ($params, $callMethod, $input) {
-                $this->callMethod($callMethod, [$query, $params['field'], $input]);
-            });
+            $this->callHasMethod($method, $query, $params);
         } else {
-            $this->callMethod($callMethod, [$query, $params['field'], $input]);
+            $this->callMethod($method, [$query, $params['field'], $params['value']]);
         }
+    }
+
+    /**
+     * @param $method
+     * @param $query
+     * @param $params
+     */
+    public function callHasMethod($method, $query, $params)
+    {
+        $hasMethod = $params['mix'] == 'or' ?
+            'orWhereHas' : 'whereHash';
+
+        $query->{$hasMethod}($params['relate'], function ($query) use ($params, $method) {
+            $this->callMethod($method, [$query, $params['field'], $params['value']]);
+        });
     }
 
     /**

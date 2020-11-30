@@ -14,7 +14,10 @@
     "autoload": {
         "psr-4": {
             "Cblink\\LaravelModelLibrary\\": "src"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "require-dev": {
         "orchestra/testbench": "^5.5"
