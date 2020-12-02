@@ -97,9 +97,7 @@ class SimpleSearch
 
         $inputs = request()->only(array_keys($this->items));
 
-        foreach ($inputs as $key => $val) {
-
-            $rules = array_values($this->items[$key]);
+        foreach ($this->items as $key => $rules) {
 
             // 多维数据
             if ($rules && is_array($rules[0])) {
@@ -107,24 +105,32 @@ class SimpleSearch
                     if (!isset($rule['group'])) {
                         $rule['group'] = $key;
                     }
-                    array_push($data, $this->getRule($key, $val, $rule));
+
+                    array_push($data, $this->getRule($key, $inputs, $rule));
                 }
             } else {
-                array_push($data, $this->getRule($key, $val, $rules));
+                array_push($data, $this->getRule($key, $inputs, $rules));
             }
+
         }
 
-        return $data;
+        return array_filter($data);
     }
 
     /**
      * @param $key
-     * @param $value
+     * @param $inputs
      * @param $rules
      * @return array
      */
-    public function getRule($key, $value, $rules)
+    public function getRule($key, $inputs, $rules)
     {
+        $value = $rules['value'] ?? $inputs[$key] ?? $rules['default'] ?? null;
+
+        if (empty($value)) {
+            return null;
+        }
+
         if (isset($rules['type']) && $rules['type'] == 'keyword') {
             $rules['after'] = "%";
             $value = trim($value, '%');
