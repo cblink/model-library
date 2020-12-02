@@ -100,7 +100,7 @@ class SimpleSearch
         foreach ($this->items as $key => $rules) {
 
             // 多维数据
-            if ($rules && is_array($rules[0])) {
+            if ($rules && is_array(array_values($rules)[0])) {
                 foreach ($rules as $rule) {
                     if (!isset($rule['group'])) {
                         $rule['group'] = $key;
