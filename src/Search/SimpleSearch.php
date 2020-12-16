@@ -179,7 +179,7 @@ class SimpleSearch
     public function callHasMethod($method, $query, $params)
     {
         $hasMethod = $params['mix'] == 'or' ?
-            'orWhereHas' : 'whereHash';
+            'orWhereHas' : 'whereHas';
 
         $query->{$hasMethod}($params['relate'], function ($query) use ($params, $method) {
             $this->callMethod($method, [$query, $params['field'], $params['value']]);
