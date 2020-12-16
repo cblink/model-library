@@ -67,7 +67,7 @@ trait SearchOrMethod
      */
     public function orWhereIn($query, $key, $val)
     {
-        $query->orWhereIn($key, $val);
+        $query->orWhereIn($key, is_array($val) ? $val : [$val]);
     }
 
     /**

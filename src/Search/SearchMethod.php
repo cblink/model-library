@@ -63,7 +63,7 @@ trait SearchMethod
      */
     public function whereIn($query, $key, $val)
     {
-        $query->whereIn($key, $val);
+        $query->whereIn($key, is_array($val) ? $val : [$val]);
     }
 
     /**
