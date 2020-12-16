@@ -47,7 +47,7 @@ trait PageableTrait
      */
     public function scopeSimplePage($query, $column = ['*'], int $pageSize = 10, int $maxPageSize = 150)
     {
-        return $query->scopePage($query, $column, $pageSize, $maxPageSize, true);
+        return $this->scopePage($query, $column, $pageSize, $maxPageSize, true);
     }
 
     /**
