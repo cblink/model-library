@@ -136,7 +136,9 @@ class SimpleSearch
             $value = trim($value, '%');
         }
 
-        $value = ($rules['before'] ?? '') . $value . ($rules['after'] ?? '');
+        if ($rules['type'] != 'in') {
+            $value = ($rules['before'] ?? '') . $value . ($rules['after'] ?? '');
+        }
 
         $params = [
             'type' => 'eq',
