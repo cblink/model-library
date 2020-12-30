@@ -131,13 +131,15 @@ class SimpleSearch
             return null;
         }
 
-        if (isset($rules['type']) && $rules['type'] == 'keyword') {
-            $rules['after'] = "%";
-            $value = trim($value, '%');
-        }
+        if (isset($rules['type'])) {
+            if ($rules['type'] == 'keyword') {
+                $rules['after'] = "%";
+                $value = trim($value, '%');
+            }
 
-        if ($rules['type'] != 'in') {
-            $value = ($rules['before'] ?? '') . $value . ($rules['after'] ?? '');
+            if ($rules['type'] != 'in') {
+                $value = ($rules['before'] ?? '') . $value . ($rules['after'] ?? '');
+            }
         }
 
         $params = [
