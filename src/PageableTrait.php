@@ -57,12 +57,15 @@ trait PageableTrait
      * @param array $column
      * @param int $pageSize
      * @param int $pageLimit
+     * @param int $maxPageSize
      * @param bool $simple
      * @return LengthAwarePaginator|static[]
      */
-    public function scopePageOrAll($query, $column = ['*'], $pageSize = 10, $pageLimit = 500, bool $simple = false)
+    public function scopePageOrAll($query, $column = ['*'],int $pageSize = 10,int $pageLimit = 500, int $maxPageSize = 150, bool $simple = false)
     {
-        return request(config('app.paginate.all_key', 'is_all')) ? $query->limit($pageLimit)->get($column) : $this->scopePage($query, $column, $pageSize, $simple);
+        return request(config('app.paginate.all_key', 'is_all')) ?
+            $query->limit($pageLimit)->get($column) :
+            $this->scopePage($query, $column, $pageSize, $maxPageSize, $simple);
     }
 
     /**
@@ -72,10 +75,11 @@ trait PageableTrait
      * @param array $column
      * @param int $pageSize
      * @param int $pageLimit
+     * @param int $maxPageSize
      * @return LengthAwarePaginator|static[]
      */
-    public function scopeSimplePageOrAll($query, $column = ['*'], $pageSize = 10, $pageLimit = 500)
+    public function scopeSimplePageOrAll($query, $column = ['*'], $pageSize = 10, $pageLimit = 500, int $maxPageSize = 150)
     {
-        return $this->scopePageOrAll($query, $column, $pageSize, $pageLimit, true);
+        return $this->scopePageOrAll($query, $column, $pageSize, $pageLimit, $maxPageSize,true);
     }
 }
