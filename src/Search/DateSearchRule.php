@@ -18,7 +18,7 @@ class DateSearchRule implements Rule
         $date = explode("~", $value);
 
         if (count($date) >= 2) {
-            return strtotime($date[0]) && strtotime($date[1]) && strtotime($date[0]) < strtotime($date[1]);
+            return strtotime($date[0]) && strtotime($date[1]) && strtotime($date[0]) <= strtotime($date[1]);
         }
 
         return strtotime($date[0]);
