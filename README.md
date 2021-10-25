@@ -1,4 +1,4 @@
-<h1 align="center"> laravel-model-simple-search </h1>
+<h1 align="center"> model-library </h1>
 
 <p align="center"> .</p>
 
@@ -6,7 +6,7 @@
 ## Installing
 
 ```shell
-$ composer require cblink/laravel-model-simple-search -vvv
+$ composer require cblink/model-library -vvv
 ```
 
 ## Usage
