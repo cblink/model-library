@@ -1,10 +1,8 @@
 <?php
 
-namespace Cblink\LaravelModelLibrary\Search;
+namespace Cblink\ModelLibrary\Kernel;
 
-use Illuminate\Contracts\Validation\Rule;
-
-class DateSearchRule implements Rule
+abstract class DateSearchRule
 {
     /**
      * Determine if the validation rule passes.

@@ -8,7 +8,7 @@
  * @param string $format
  * @return false|string
  */
-function strtodate($string, $format = 'Y-m-d H:i:s')
+function strtodate($string, string $format = 'Y-m-d H:i:s')
 {
     return date($format, strtotime($string));
 }

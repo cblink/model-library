@@ -1,5 +1,5 @@
 {
-    "name": "cblink/laravel-model-library",
+    "name": "cblink/model-library",
     "description": "Package description here.",
     "license": "MIT",
     "authors": [
@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Cblink\\LaravelModelLibrary\\": "src"
+            "Cblink\\ModelLibrary\\": "src"
         },
         "files": [
             "src/helpers.php"

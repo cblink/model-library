@@ -1,6 +1,6 @@
 <?php
 
-namespace Cblink\LaravelModelLibrary;
+namespace Cblink\ModelLibrary\Laravel;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 

@@ -1,8 +1,7 @@
 <?php
 
-namespace Cblink\LaravelModelLibrary;
+namespace Cblink\ModelLibrary\Hyperf;
 
-use Cblink\LaravelModelLibrary\Search\SimpleSearch;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -21,7 +20,7 @@ trait SearchableTrait
      */
     public function scopeSearch($query, array $items, array $attributes = [])
     {
-        return app(SimpleSearch::class, [
+        return make(SimpleSearch::class, [
             'query' => $query,
             'items' => $items,
             'attributes' => $attributes,

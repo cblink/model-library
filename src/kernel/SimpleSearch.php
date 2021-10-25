@@ -1,17 +1,15 @@
 <?php
 
-namespace Cblink\LaravelModelLibrary\Search;
+namespace Cblink\ModelLibrary\Kernel;
 
 use Illuminate\Support\Arr;
-use InvalidArgumentException;
-use Illuminate\Database\Eloquent\Builder;
 
-class SimpleSearch
+abstract class SimpleSearch
 {
     use SearchMethod, SearchOrMethod;
 
     /**
-     * @var Builder
+     * @var \Illuminate\Database\Eloquent\Builder|\Hyperf\Database\Model\Builder
      */
     protected $query;
 
@@ -50,9 +48,9 @@ class SimpleSearch
             // where($key, '>=', $val)
             'gte' => ['nullable', 'integer'],
             // 使用whereDate筛选，示例值：2019-10-10~2020-12-10
-            'date' => ['nullable', 'string', 'max:21', new DateSearchRule()],
+            'date' => ['nullable', 'string', 'max:21', $this->getDateRule()],
             // 使用where筛选，示例值：2019-10-10 12:24:33~2020-12-10 15:33:22
-            'datetime' => ['nullable', 'string', 'max:40', new DateSearchRule()],
+            'datetime' => ['nullable', 'string', 'max:40', $this->getDateRule()],
             // 关键词筛选，LIKE搜索
             'keyword' => ['nullable', 'string', 'max:100'],
             // where in 筛选
@@ -67,7 +65,7 @@ class SimpleSearch
     }
 
     /**
-     * @return Builder
+     * @return \Illuminate\Database\Eloquent\Builder|\Hyperf\Database\Model\Builder
      */
     public function search()
     {
@@ -77,7 +75,7 @@ class SimpleSearch
             $inputs = $this->getInputs();
 
             foreach (collect($inputs)->groupBy('group') as $collects) {
-                $this->query->where(function (Builder $query) use ($collects){
+                $this->query->where(function ($query) use ($collects){
                     foreach ($collects as $params) {
                         $this->execQuery($query, $params);
                     }
@@ -207,16 +205,6 @@ class SimpleSearch
         call_user_func_array([$this, $method], $args);
     }
 
-
-    public function validate()
-    {
-        $validate = validator(request()->all(), $this->getRules(), [], $this->attributes);
-
-        if ($validate->fails()) {
-            throw new InvalidArgumentException();
-        }
-    }
-
     /**
      * @return array
      */
@@ -237,8 +225,15 @@ class SimpleSearch
     }
 
     // 默认筛选
-    public function whereDefault(Builder $query, $key, $val)
+    public function whereDefault($query, $key, $val)
     {
         $query->where($key, $val);
     }
+
+    /**
+     * @return mixed
+     */
+    abstract public function validate();
+
+    abstract public function getDateRule();
 }

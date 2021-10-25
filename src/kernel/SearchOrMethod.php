@@ -1,15 +1,13 @@
 <?php
 
-namespace Cblink\LaravelModelLibrary\Search;
-
-use Illuminate\Database\Eloquent\Builder;
+namespace Cblink\ModelLibrary\Kernel;
 
 trait SearchOrMethod
 {
     /**
      * 日期筛选
      *
-     * @param Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder|\Hyperf\Database\Model\Builder $query
      * @param $key
      * @param $val
      */
@@ -29,7 +27,7 @@ trait SearchOrMethod
     /**
      * 时间筛选
      *
-     * @param Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder|\Hyperf\Database\Model\Builder $query
      * @param $key
      * @param $val
      */
@@ -49,7 +47,7 @@ trait SearchOrMethod
     /**
      * 关键字筛选
      *
-     * @param Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder|\Hyperf\Database\Model\Builder $query
      * @param $key
      * @param $val
      */
@@ -61,7 +59,7 @@ trait SearchOrMethod
     /**
      * where in
      *
-     * @param Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder|\Hyperf\Database\Model\Builder $query
      * @param $key
      * @param $val
      */
