@@ -26,7 +26,7 @@ trait PageableTrait
      */
     public function scopePage($query, $column = ['*'], int $pageSize = 10, int $maxPageSize = 150, bool $simple = false)
     {
-        $size = request(config('app.paginate.page_key', 'page_size'), $pageSize);
+        $size = request(config('app.paginate.page_key', 'per_page'), $pageSize);
 
         // 限定分页每页不大于150条
         $size = ($size > $maxPageSize) ? $maxPageSize : $size;
