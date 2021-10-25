@@ -72,9 +72,7 @@ abstract class SimpleSearch
         if ($this->items) {
             $this->validate();
 
-            $inputs = $this->getInputs();
-
-            foreach (collect($inputs)->groupBy('group') as $collects) {
+            foreach ($this->getInputs() as $collects) {
                 $this->query->where(function ($query) use ($collects){
                     foreach ($collects as $params) {
                         $this->execQuery($query, $params);
@@ -93,7 +91,7 @@ abstract class SimpleSearch
     {
         $data = [];
 
-        $inputs = request()->only(array_keys($this->items));
+        $inputs = $this->getInputData();
 
         foreach ($this->items as $key => $rules) {
 
@@ -236,4 +234,6 @@ abstract class SimpleSearch
     abstract public function validate();
 
     abstract public function getDateRule();
+
+    abstract public function getInputData();
 }

@@ -21,4 +21,9 @@ class SimpleSearch extends \Cblink\ModelLibrary\Kernel\SimpleSearch
     {
         return new DateSearchRule();
     }
+
+    public function getInputData()
+    {
+        return collect(request()->only(array_keys($this->items)))->groupBy('group');
+    }
 }

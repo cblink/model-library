@@ -11,7 +11,7 @@ abstract class DateSearchRule
      * @param  mixed  $value
      * @return bool
      */
-    public function passes($attribute, $value)
+    public function validate($attribute, $value)
     {
         $date = explode("~", $value);
 
