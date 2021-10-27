@@ -2,11 +2,9 @@
 
 namespace Cblink\ModelLibrary\Hyperf;
 
-use Illuminate\Database\Eloquent\Builder;
-
 /**
  * Class ModelSearchTrait
- * @method $this search(array $items, array $attributes = [])
+ * @method static|\Hyperf\Database\Model\Builder search(array $items, array $attributes = [])
  * @package App\Http\Traits\Model
  */
 trait SearchableTrait
@@ -16,7 +14,7 @@ trait SearchableTrait
      * @param $query
      * @param array $items
      * @param array $attributes
-     * @return Builder
+     * @return \Hyperf\Database\Model\Builder
      */
     public function scopeSearch($query, array $items, array $attributes = [])
     {
