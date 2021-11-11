@@ -110,7 +110,11 @@ abstract class SimpleSearch
 
         }
 
-        return array_filter($data);
+        $data = class_exists("\Hyperf\Utils\Collection") ?
+            new \Hyperf\Utils\Collection($data) :
+            new \Illuminate\Support\Collection($data);
+
+        return $data->filter()->groupBy('group');
     }
 
     /**

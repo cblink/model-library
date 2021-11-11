@@ -32,8 +32,6 @@ class SimpleSearch extends \Cblink\ModelLibrary\Kernel\SimpleSearch
 
     public function getInputData()
     {
-        $data = Arr::only(make(RequestInterface::class)->all(), array_keys($this->items));
-
-        return (new Collection())->groupBy('group');
+        return Arr::only(make(RequestInterface::class)->all(), array_keys($this->items));
     }
 }
