@@ -127,7 +127,7 @@ abstract class SimpleSearch
     {
         $value = $rules['value'] ?? $inputs[$key] ?? $rules['default'] ?? null;
 
-        if (is_null($value) || (is_string($value) && empty($value))) {
+        if (is_null($value) || trim($value) == "") {
             return null;
         }
 
