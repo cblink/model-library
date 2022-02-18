@@ -35,7 +35,7 @@ trait PageableTrait
 
         $callMethod = $simple ? 'simplePaginate' : 'paginate';
 
-        return $query->{$callMethod}($size, $column);
+        return $query->{$callMethod}((int) $size, $column);
     }
 
     /**
