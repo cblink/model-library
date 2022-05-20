@@ -26,8 +26,19 @@ trait WhenWithTrait
         $data = $loaded;
 
         foreach ($withQuery as $key) {
-            if (array_key_exists($key, $with)) {
+            if (!array_key_exists($key, $with)) {
+                continue;
+            }
+
+            // 如果是数组，则标记为with
+            if (is_array($with[$key])) {
                 $data = array_merge($data, $with[$key]);
+                continue;
+            }
+
+            // 如果是闭包，则视为回调方法
+            if ($with[$key] instanceof \Closure) {
+                $query = call_user_func($with[$key], $query);
             }
         }
 
