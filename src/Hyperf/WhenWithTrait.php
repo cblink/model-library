@@ -27,7 +27,7 @@ trait WhenWithTrait
 
         foreach ($withQuery as $key) {
             if (array_key_exists($key, $with)) {
-                $data += $with[$key];
+                $data = array_merge($data, $with[$key]);
             }
         }
 
