@@ -30,15 +30,20 @@ trait WhenWithTrait
                 continue;
             }
 
+            if (is_string($value = $with[$key])) {
+                $data[] = $value;
+                continue;
+            }
+
             // 如果是数组，则标记为with
-            if (is_array($with[$key])) {
-                $data = array_merge($data, $with[$key]);
+            if (is_array($value)) {
+                $data = array_merge($data, $value);
                 continue;
             }
 
             // 如果是闭包，则视为回调方法
-            if ($with[$key] instanceof \Closure) {
-                $query = call_user_func($with[$key], $query);
+            if ($value instanceof \Closure) {
+                $query = call_user_func($value, $query);
             }
         }
 
