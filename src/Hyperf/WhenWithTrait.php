@@ -2,6 +2,8 @@
 
 namespace Cblink\ModelLibrary\Hyperf;
 
+use Hyperf\HttpServer\Contract\RequestInterface;
+
 /**
  * @method \Hyperf\Database\Model\Builder|static whenWith(array $with = [], array $loaded = [])
  */
