@@ -47,7 +47,11 @@ trait WhenWithTrait
             }
         }
 
-        return $query->with($data);
+        if ($data) {
+            return $query->with($data);
+        }
+
+        return $query;
     }
 
 }
