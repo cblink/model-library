@@ -3,7 +3,7 @@
 namespace Cblink\ModelLibrary\Hyperf;
 
 /**
- * @method \Hyperf\Database\Model\Builder|static wheSort(array $sortKeys = [])
+ * @method \Hyperf\Database\Model\Builder|static whenSort(array $sortKeys = [])
  */
 trait WhenSortTrait
 {
@@ -14,7 +14,7 @@ trait WhenSortTrait
      * @param array $sortKeys 允许传入控制的排序字段
      * @return mixed
      */
-    public function scopeWheSort($query, array $sortKeys = [])
+    public function scopeWhenSort($query, array $sortKeys = [])
     {
         $withSort = make(RequestInterface::class)
             ->input(config('custom.paginate.sort_key', 'with_sort'), []);
