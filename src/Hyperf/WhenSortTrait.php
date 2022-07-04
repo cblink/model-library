@@ -3,7 +3,7 @@
 namespace Cblink\ModelLibrary\Hyperf;
 
 /**
- * @method wheSort(array $sortKeys = [])
+ * @method \Hyperf\Database\Model\Builder|static wheSort(array $sortKeys = [])
  */
 trait WhenSortTrait
 {
