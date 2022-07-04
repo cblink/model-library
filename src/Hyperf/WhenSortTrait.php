@@ -2,6 +2,9 @@
 
 namespace Cblink\ModelLibrary\Hyperf;
 
+/**
+ * @method wheSort(array $sortKeys = [])
+ */
 trait WhenSortTrait
 {
     /**
