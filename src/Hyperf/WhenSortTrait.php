@@ -22,7 +22,7 @@ trait WhenSortTrait
             ->input(config('custom.paginate.sort_key', 'with_sort'), []);
 
         foreach ($withSort as $key => $sort) {
-            if (!array_key_exists($key, $sortKeys)) {
+            if (!in_array($key, $sortKeys)) {
                 continue;
             }
 
