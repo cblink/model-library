@@ -26,7 +26,7 @@ trait WhenSortTrait
                 continue;
             }
 
-            $query->sortBy($key, $sort == 'asc' ? 'asc' : 'desc');
+            $query->orderBy($key, $sort == 'asc' ? 'asc' : 'desc');
         }
 
         return $query;
