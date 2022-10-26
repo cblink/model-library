@@ -53,6 +53,21 @@ trait SearchMethod
     }
 
     /**
+     * 关联结果查询
+     *
+     * @param $query
+     * @param $key
+     * @param $val
+     * @return void
+     */
+    public function whereHas($query, $key, $val)
+    {
+        $query->when($val, function ($query) use ($key){
+            $query->has($key);
+        });
+    }
+
+    /**
      * where in
      *
      * @param \Illuminate\Database\Eloquent\Builder|\Hyperf\Database\Model\Builder $query

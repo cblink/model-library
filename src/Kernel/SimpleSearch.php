@@ -55,6 +55,8 @@ abstract class SimpleSearch
             'keyword' => ['nullable', 'string', 'max:100'],
             // where in 筛选
             'in' => ['nullable', 'array'],
+            // has查询
+            'has' => ['nullable', 'string'],
         ];
 
         if ($key) {
