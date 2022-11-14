@@ -62,8 +62,16 @@ trait SearchMethod
      */
     public function whereHas($query, $key, $val)
     {
+        if (in_array($val, [0, 1])) {
+            return $query;
+        }
+
         $query->when($val, function ($query) use ($key){
-            $query->has($key);
+            if ($key == 1) {
+                $query->has($key);
+            } else {
+                $query->whereDoesntHave($key);
+            }
         });
     }
 
