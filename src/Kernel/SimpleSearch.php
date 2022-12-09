@@ -23,7 +23,7 @@ abstract class SimpleSearch
      */
     protected $attributes = [];
 
-    public function __construct($query, $items, $attributes = [])
+    public function __construct($query, $items, array $attributes = [])
     {
         $this->query = $query;
         $this->items = $items;

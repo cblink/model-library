@@ -14,10 +14,8 @@ class SimpleSearch extends \Cblink\ModelLibrary\Kernel\SimpleSearch
     {
         $validate = make(ValidatorFactoryInterface::class)
             ->make(
-                make(RequestInterface::class)->all(),
-                $this->getRules(),
-                [],
-                $this->attributes
+                $this->attributes ?: make(RequestInterface::class)->all(),
+                $this->getRules()
             );
 
         if ($validate->fails()) {
@@ -32,6 +30,6 @@ class SimpleSearch extends \Cblink\ModelLibrary\Kernel\SimpleSearch
 
     public function getInputData()
     {
-        return Arr::only(make(RequestInterface::class)->all(), array_keys($this->items));
+        return Arr::only($this->attributes ?: make(RequestInterface::class)->all(), array_keys($this->items));
     }
 }

@@ -10,7 +10,7 @@ class SimpleSearch extends \Cblink\ModelLibrary\Kernel\SimpleSearch
 {
     public function validate()
     {
-        $validate = validator(request()->all(), $this->getRules(), [], $this->attributes);
+        $validate = validator($this->attributes ?: request()->all(), $this->getRules(), []);
 
         if ($validate->fails()) {
             throw new InvalidArgumentException();
@@ -24,6 +24,11 @@ class SimpleSearch extends \Cblink\ModelLibrary\Kernel\SimpleSearch
 
     public function getInputData()
     {
-        return request()->only(array_keys($this->items));
+        $keys = array_keys($this->items);
+
+        if ($this->attributes) {
+            return Arr::only($this->attributes, $keys);
+        }
+        return request()->only($keys);
     }
 }

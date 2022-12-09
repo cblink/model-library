@@ -9,7 +9,6 @@ namespace Cblink\ModelLibrary\Hyperf;
  */
 trait SearchableTrait
 {
-
     /**
      * @param $query
      * @param array $items
