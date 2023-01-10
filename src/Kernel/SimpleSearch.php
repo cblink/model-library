@@ -140,7 +140,7 @@ abstract class SimpleSearch
         if (isset($rules['type'])) {
             if ($rules['type'] == 'keyword') {
                 $rules['after'] = "%";
-                $value = preg_replace("/[\^%_\[\]]/", '',$value);
+                $value = preg_replace("/[\^%_\[\]]/", '', $value);
             }
 
             if ($rules['type'] != 'in') {

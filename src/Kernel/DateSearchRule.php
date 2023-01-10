@@ -15,11 +15,22 @@ abstract class DateSearchRule
     {
         $date = explode("~", $value);
 
-        if (count($date) >= 2) {
-            return strtotime($date[0]) && strtotime($date[1]) && strtotime($date[0]) <= strtotime($date[1]);
+        if (count($date) == 2) {
+
+            if ($date[0] && $date[1]) {
+                return strtotime($date[0]) && strtotime($date[1]) && strtotime($date[0]) <= strtotime($date[1]);
+            }
+
+            if (empty($date[0])) {
+                return (bool) strtotime($date[1]);
+            }
+
+            if (empty($date[1])) {
+                return (bool) strtotime($date[1]);
+            }
         }
 
-        return strtotime($date[0]);
+        return (bool) strtotime($date[0]);
     }
 
     /**

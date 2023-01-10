@@ -15,8 +15,13 @@ trait SearchMethod
     {
         $date = explode("~", $val);
         if (count($date) == 2) {
-            $query->whereDate($key, '>=', strtodate($date[0], 'Y-m-d'))
-                ->whereDate($key, '<=', strtodate($date[1], 'Y-m-d'));
+            $query
+                ->when(!empty($date[0]), function ($query) use ($key, $date) {
+                    $query->whereDate($key, '>=', strtodate($date[0], 'Y-m-d'));
+                })
+                ->when(!empty($date[1]), function ($query) use ($key, $date) {
+                    $query->whereDate($key, '<=', strtodate($date[1], 'Y-m-d'));
+                });
         } else {
             $query->whereDate($key, $date[0]);
         }
@@ -33,8 +38,13 @@ trait SearchMethod
     {
         $date = explode("~", $val);
         if (count($date) == 2) {
-            $query->where($key, '>=', strtodate($date[0]))
-                ->where($key, '<=', strtodate($date[1]));
+            $query
+                ->when(!empty($date[0]), function ($query) use ($key, $date) {
+                    $query->where($key, '>=', strtodate($date[0]));
+                })
+                ->when(!empty($date[1]), function ($query) use ($key, $date) {
+                    $query->where($key, '<=', strtodate($date[1]));
+                });
         } else {
             $query->where($key, $date[0]);
         }
