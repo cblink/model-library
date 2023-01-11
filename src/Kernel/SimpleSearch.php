@@ -96,7 +96,6 @@ abstract class SimpleSearch
         $inputs = $this->getInputData();
 
         foreach ($this->items as $key => $rules) {
-
             // 多维数据
             if ($rules && is_array(array_values($rules)[0])) {
                 foreach ($rules as $rule) {
@@ -104,12 +103,36 @@ abstract class SimpleSearch
                         $rule['group'] = $key;
                     }
 
-                    array_push($data, $this->getRule($key, $inputs, $rule));
+                    $result = $this->getRule($key, $inputs, $rule);
+
+                    if (! $result['relate']) {
+                        $data[] = $result;
+                        continue;
+                    }
+
+                    if (! array_key_exists($result['relate'], $data)) {
+                        $data[$result['relate']] = $result;
+                        continue;
+                    }
+
+                    $data[$result['relate']]['fields'][] = $result;
                 }
             } else {
-                array_push($data, $this->getRule($key, $inputs, $rules));
-            }
 
+                $result = $this->getRule($key, $inputs, $rules);
+
+                if (! $result['relate']) {
+                    $data[] = $result;
+                    continue;
+                }
+
+                if (! array_key_exists($result['relate'], $data)) {
+                    $data[$result['relate']] = $result;
+                    continue;
+                }
+
+                $data[$result['relate']]['fields'][] = $result;
+            }
         }
 
         $data = class_exists("\Hyperf\Utils\Collection") ?
@@ -156,6 +179,7 @@ abstract class SimpleSearch
             'group' => 'default',
             'mix' => 'and',
             "value" => $value,
+            'fields' => [],
         ];
 
         return array_merge($params, $rules);
@@ -193,6 +217,15 @@ abstract class SimpleSearch
 
         $query->{$hasMethod}($params['relate'], function ($query) use ($params, $method) {
             $this->callMethod($method, [$query, $params['field'], $params['value']]);
+
+            foreach ($params['fields'] as $item) {
+                // 调用的方法
+                $method = $item['mix'] == 'or' ?
+                    sprintf('orWhere%s', ucfirst($item['type'])) :
+                    sprintf('where%s', ucfirst($item['type']));
+
+                $this->callMethod($method, [$query, $item['field'], $item['value']]);
+            }
         });
     }
 
