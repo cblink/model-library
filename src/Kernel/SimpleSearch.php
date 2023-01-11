@@ -103,9 +103,11 @@ abstract class SimpleSearch
                         $rule['group'] = $key;
                     }
 
-                    $result = $this->getRule($key, $inputs, $rule);
+                    if (is_null($result = $this->getRule($key, $inputs, $rule))) {
+                        continue;
+                    }
 
-                    if (! $result['relate']) {
+                    if (is_null($result['relate'])) {
                         $data[] = $result;
                         continue;
                     }
@@ -119,9 +121,11 @@ abstract class SimpleSearch
                 }
             } else {
 
-                $result = $this->getRule($key, $inputs, $rules);
+                if (is_null($result = $this->getRule($key, $inputs, $rules))) {
+                    continue;
+                }
 
-                if (! $result['relate']) {
+                if (is_null($result['relate'])) {
                     $data[] = $result;
                     continue;
                 }
