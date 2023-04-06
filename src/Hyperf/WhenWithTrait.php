@@ -43,7 +43,7 @@ trait WhenWithTrait
 
             // 如果是闭包，则视为回调方法
             if ($value instanceof \Closure) {
-                $query = call_user_func($value, $query);
+                call_user_func($value, $query);
             }
         }
 

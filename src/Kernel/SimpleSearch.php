@@ -2,8 +2,6 @@
 
 namespace Cblink\ModelLibrary\Kernel;
 
-use Illuminate\Support\Arr;
-
 abstract class SimpleSearch
 {
     use SearchMethod, SearchOrMethod;
@@ -60,7 +58,7 @@ abstract class SimpleSearch
         ];
 
         if ($key) {
-            return Arr::get($rules, $key);
+            return $this->arrGet($rules, $key);
         }
 
         return $rules;
@@ -139,11 +137,25 @@ abstract class SimpleSearch
             }
         }
 
-        $data = class_exists("\Hyperf\Utils\Collection") ?
+        return $this->collect($data)->filter()->groupBy('group');
+    }
+
+    /**
+     * @param $data
+     * @return \Hyperf\Utils\Collection|\Illuminate\Support\Collection
+     */
+    public function collect($data)
+    {
+        return class_exists("\Hyperf\Utils\Collection") ?
             new \Hyperf\Utils\Collection($data) :
             new \Illuminate\Support\Collection($data);
+    }
 
-        return $data->filter()->groupBy('group');
+    public function arrGet($rules, $key, $default = null)
+    {
+        return class_exists("\Hyperf\Utils\Arr") ?
+            \Hyperf\Utils\Arr::get($rules, $key, $default) :
+            \Illuminate\Support\Arr::get($rules, $key, $default);
     }
 
     /**
