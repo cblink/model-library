@@ -28,6 +28,8 @@ return [
 
 ## 使用
 
+Hyperf 引用 `Cblink\ModelLibrary\Hyperf` 同名下的类即可
+
 ### 分页示例
 #### 引用
 给 Model 引入 Cblink\ModelLibrary\Laravel\PageableTrait 
