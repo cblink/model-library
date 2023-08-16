@@ -2,10 +2,8 @@
 
 namespace Cblink\ModelLibrary\Laravel;
 
-use Hyperf\HttpServer\Contract\RequestInterface;
-
 /**
- * @method \Hyperf\Database\Model\Builder|static whenWith(array $with = [], array $loaded = [])
+ * @method static|\Illuminate\Database\Eloquent\Builder whenWith(array $with = [], array $loaded = [])
  */
 trait WhenWithTrait
 {
