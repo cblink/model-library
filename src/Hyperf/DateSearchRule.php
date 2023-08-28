@@ -17,4 +17,14 @@ class DateSearchRule extends \Cblink\ModelLibrary\Kernel\DateSearchRule implemen
     {
        return $this->validate($attribute, $value);
     }
+
+    /**
+     * Get the validation error message.
+     *
+     * @return string
+     */
+    public function message() :array|string
+    {
+        return 'The validation error message.';
+    }
 }
