@@ -13,7 +13,7 @@ trait SearchMethod
      */
     public function whereDate($query, $key, $val)
     {
-        $date = explode("~", $val);
+        $date = is_array($val) ? $val : explode("~", $val);
         if (count($date) == 2) {
             $query
                 ->when(!empty($date[0]), function ($query) use ($key, $date) {
@@ -36,7 +36,7 @@ trait SearchMethod
      */
     public function whereDatetime($query, $key, $val)
     {
-        $date = explode("~", $val);
+        $date = is_array($val) ? $val : explode("~", $val);
         if (count($date) == 2) {
             $query
                 ->when(!empty($date[0]), function ($query) use ($key, $date) {
