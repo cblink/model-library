@@ -46,9 +46,9 @@ abstract class SimpleSearch
             // where($key, '>=', $val)
             'gte' => ['nullable', 'integer'],
             // 使用whereDate筛选，示例值：2019-10-10~2020-12-10
-            'date' => ['nullable', 'string', 'max:21', $this->getDateRule()],
+            'date' => ['nullable', $this->getDateRule()],
             // 使用where筛选，示例值：2019-10-10 12:24:33~2020-12-10 15:33:22
-            'datetime' => ['nullable', 'string', 'max:40', $this->getDateRule()],
+            'datetime' => ['nullable', $this->getDateRule()],
             // 关键词筛选，LIKE搜索
             'keyword' => ['nullable', 'string', 'max:100'],
             // where in 筛选
