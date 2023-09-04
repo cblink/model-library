@@ -182,7 +182,7 @@ abstract class SimpleSearch
                 $value = preg_replace("/[\^%_\[\]]/", '', $value);
             }
 
-            if ($rules['type'] != 'in') {
+            if (! in_array($rules['type'], ['in', 'date', 'datetime', 'has'])) {
                 $value = ($rules['before'] ?? '') . $value . ($rules['after'] ?? '');
             }
         }
