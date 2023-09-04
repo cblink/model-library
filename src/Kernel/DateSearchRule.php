@@ -13,7 +13,7 @@ abstract class DateSearchRule
      */
     public function validate($attribute, $value)
     {
-        $date = explode("~", $value);
+        $date = is_array($value) ? $value : explode("~", $value);
 
         if (count($date) == 2) {
 
@@ -40,6 +40,6 @@ abstract class DateSearchRule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return '日期格式错误.';
     }
 }

@@ -13,7 +13,7 @@ trait SearchOrMethod
      */
     public function orWhereDate($query, $key, $val)
     {
-        $date = explode("~", $val);
+        $date = is_array($val) ? $val : explode("~", $val);
         if (count($date) == 2) {
             $query->orWhere(function($query) use ($key, $date){
                 $query
@@ -38,7 +38,7 @@ trait SearchOrMethod
      */
     public function orWhereDatetime($query, $key, $val)
     {
-        $date = explode("~", $val);
+        $date = is_array($val) ? $val : explode("~", $val);
         if (count($date) == 2) {
             $query->orWhere(function($query) use ($key, $date){
                 $query

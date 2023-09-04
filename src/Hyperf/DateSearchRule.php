@@ -25,6 +25,6 @@ class DateSearchRule extends \Cblink\ModelLibrary\Kernel\DateSearchRule implemen
      */
     public function message() :array|string
     {
-        return 'The validation error message.';
+        return '日期格式错误.';
     }
 }
