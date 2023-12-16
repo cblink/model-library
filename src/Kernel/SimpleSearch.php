@@ -209,30 +209,30 @@ abstract class SimpleSearch
      */
     public function execQuery($query, array $params = [])
     {
-        // 调用的方法
-        $method = $params['mix'] == 'or' ?
-            sprintf('orWhere%s', ucfirst($params['type'])) :
-            sprintf('where%s', ucfirst($params['type']));
-
         if ($params['relate']) {
-            $this->callHasMethod($method, $query, $params);
+            $this->callHasMethod($query, $params);
         } else {
+            // 调用的方法
+            $method = $params['mix'] == 'or' ?
+                sprintf('orWhere%s', ucfirst($params['type'])) :
+                sprintf('where%s', ucfirst($params['type']));
+
             $this->callMethod($method, [$query, $params['field'], $params['value']]);
         }
     }
 
     /**
-     * @param $method
      * @param $query
      * @param $params
      */
-    public function callHasMethod($method, $query, $params)
+    public function callHasMethod($query, $params)
     {
         $hasMethod = $params['mix'] == 'or' ?
             'orWhereHas' : 'whereHas';
 
-        $query->{$hasMethod}($params['relate'], function ($query) use ($params, $method) {
-            $this->callMethod($method, [$query, $params['field'], $params['value']]);
+        $query->{$hasMethod}($params['relate'], function ($query) use ($params) {
+
+            $this->callMethod(sprintf('where%s', ucfirst($params['type'])), [$query, $params['field'], $params['value']]);
 
             foreach ($params['fields'] as $item) {
                 // 调用的方法
