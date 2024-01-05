@@ -55,6 +55,8 @@ abstract class SimpleSearch
             'in' => ['nullable', 'array'],
             // has查询
             'has' => ['nullable', 'string'],
+            // whereNull 1 == true , or false
+            'null' => ['nullable', 'boolean'],
         ];
 
         if ($key) {

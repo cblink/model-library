@@ -104,6 +104,19 @@ trait SearchMethod
     }
 
     /**
+     * @param $query
+     * @param $key
+     * @param $val
+     * @return mixed
+     */
+    public function whereNull($query, $key, $val)
+    {
+        return $val ?
+            $query->whereNull($key) :
+            $query->whereNotNull($key);
+    }
+
+    /**
      * 小于
      *
      * @param $query
