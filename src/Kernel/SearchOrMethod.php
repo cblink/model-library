@@ -126,6 +126,18 @@ trait SearchOrMethod
         $query->orWhere($key, '>', $val);
     }
 
+    /**
+     * @param $query
+     * @param $key
+     * @param $val
+     * @return mixed
+     */
+    public function orWhereNull($query, $key, $val)
+    {
+        return $val ?
+            $query->orWhereNull($key) :
+            $query->orWhereNotNull($key);
+    }
 
     /**
      * 大于或等于
