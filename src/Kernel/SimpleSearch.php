@@ -144,19 +144,19 @@ abstract class SimpleSearch
 
     /**
      * @param $data
-     * @return \Hyperf\Utils\Collection|\Illuminate\Support\Collection
+     * @return \Hyperf\Collection\Collection|\Illuminate\Support\Collection
      */
     public function collect($data)
     {
-        return class_exists("\Hyperf\Utils\Collection") ?
-            new \Hyperf\Utils\Collection($data) :
+        return class_exists("\Hyperf\Collection\Collection") ?
+            new \Hyperf\Collection\Collection($data) :
             new \Illuminate\Support\Collection($data);
     }
 
     public function arrGet($rules, $key, $default = null)
     {
-        return class_exists("\Hyperf\Utils\Arr") ?
-            \Hyperf\Utils\Arr::get($rules, $key, $default) :
+        return class_exists("\Hyperf\Collection\Arr") ?
+            \Hyperf\Collection\Arr::get($rules, $key, $default) :
             \Illuminate\Support\Arr::get($rules, $key, $default);
     }
 

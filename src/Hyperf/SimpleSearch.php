@@ -2,8 +2,8 @@
 
 namespace Cblink\ModelLibrary\Hyperf;
 
-use Hyperf\Utils\Arr;
-use Hyperf\Utils\Collection;
+use Hyperf\Collection\Arr;
+use Hyperf\Collection\Collection;
 use InvalidArgumentException;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\Validation\Contract\ValidatorFactoryInterface;
